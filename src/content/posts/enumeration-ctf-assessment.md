@@ -48,7 +48,7 @@ nmap -sV -p 445 target.ine.local
 
 The output confirmed the target was running **Samba smbd 4.6.2** on a Linux (Ubuntu) host.
 
-![](https://cdn.hashnode.com/uploads/covers/6afe9176ea699cf3085ebd20/cec8bc58-6762-48c9-8b60-b242c9454d88.png align="center")
+![Samba version output](https://cdn.hashnode.com/uploads/covers/6afe9176ea699cf3085ebd20/cec8bc58-6762-48c9-8b60-b242c9454d88.png)
 
 **Step 2: Understanding Samba & Checking Shares with** `smbclient`
 
