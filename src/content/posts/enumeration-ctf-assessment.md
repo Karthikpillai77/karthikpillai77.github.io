@@ -1,11 +1,9 @@
 ---
-title: Enumeration - CTF Assessment
+title: EJPT Walkthrough: Assessment Methodologies – Enumeration CTF 1 
 published: 2026-11-19
 tags: [eJPT, CTF, Enumeration]
 category: CTF
 ---
-
-EJPT Walkthrough: Assessment Methodologies – Enumeration CTF 1 
 
 **Challenge Overview**
 
