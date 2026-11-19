@@ -312,7 +312,7 @@ In Linux administration, a message displayed before the password prompt to warn 
 
 To view the warning banner, I initiated an SSH connection to the target machine without needing a valid password:
 
-ssh root@target.ine.local\\
+ssh root@target.ine.local
 
 **Command Explained:**
 
@@ -323,6 +323,6 @@ ssh root@target.ine.local\\
 
 After accepting the host's ED25519 fingerprint by typing `yes`, the server printed a large legal warning banner and right at the bottom of the banner was **Flag 4** (`FLAG4{173f4dd69119471da7cb0c5219070791}`)!
 
-![](https://cdn.hashnode.com/uploads/covers/6afe9176ea699cf3085ebd20/3e3936ee-1a39-4448-9707-1a5b7ef0784f.png align="center")
+![](https://cdn.hashnode.com/uploads/covers/6afe9176ea699cf3085ebd20/3e3936ee-1a39-4448-9707-1a5b7ef0784f.png)
 
 ---
