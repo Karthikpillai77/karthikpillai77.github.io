@@ -70,7 +70,7 @@ smbclient -L target.ine.local -N
 **What Happened:**\
 The output showed two default administrative shares (`print$` and `IPC$`), along with the server banner (`Samba, Ubuntu`). However, no custom user share showed up in the standard listing—which often means a share is **hidden** (or browseable is set to `no` in the Samba configuration).
 
-![](https://cdn.hashnode.com/uploads/covers/6afe9176ea699cf3085ebd20/b79f72d3-1791-4b73-a973-2231fa018505.png align="center")
+![](https://cdn.hashnode.com/uploads/covers/6afe9176ea699cf3085ebd20/b79f72d3-1791-4b73-a973-2231fa018505.png)
 
 **Step 3: Brute-Forcing Hidden Shares with** `enum4linux`
 
@@ -89,13 +89,13 @@ Flags Explained: • -s : Share Brute-Forcing. Tells enum4linux to test every na
 1. The server confirmed it allows null sessions (username '', password '').
 2. Under the Brute Force Share Enumeration section, enum4linux successfully discovered a hidden share named pubfiles that allows anonymous access!
 
-![](https://cdn.hashnode.com/uploads/covers/6afe9176ea699cf3085ebd20/1a5d4df5-5552-43ec-a5c9-aec9904b68f6.png align="center")
+![](https://cdn.hashnode.com/uploads/covers/6afe9176ea699cf3085ebd20/1a5d4df5-5552-43ec-a5c9-aec9904b68f6.png)
 
 **What's Next?**
 
 Now that we have confirmed the hidden share `pubfiles` exists and permits anonymous login, the next step is to connect directly to `//target.ine.local/pubfiles` using `smbclient` and retrieve **Flag 1**.
 
-![](https://cdn.hashnode.com/uploads/covers/6afe9176ea699cf3085ebd20/ce4f20bb-5f56-4e0a-b117-0e1db953b8f4.png align="center")
+![](https://cdn.hashnode.com/uploads/covers/6afe9176ea699cf3085ebd20/ce4f20bb-5f56-4e0a-b117-0e1db953b8f4.png)
 
 ---
 
@@ -119,7 +119,7 @@ Use code with caution.
 
 - `-r`: **RID Cycling.** Every user and group on a Windows or Samba system is assigned a unique number called a **Relative Identifier (RID)** (for example, `1000`, `1001`, `1002`). Even when anonymous user listing is blocked, tools like `enum4linux` can cycle through a range of RIDs (`500–550` and `1000–1050` by default) to uncover valid usernames.
 
-![](https://cdn.hashnode.com/uploads/covers/6afe9176ea699cf3085ebd20/31ff2375-51ad-4e98-9995-ff42da9168db.png align="center")
+![](https://cdn.hashnode.com/uploads/covers/6afe9176ea699cf3085ebd20/31ff2375-51ad-4e98-9995-ff42da9168db.png)
 
 **Discovered Users:**\
 Looking at the output under the Unix User SID (`S-1-22-1`), `enum4linux` revealed four local user accounts on the system:
@@ -129,7 +129,7 @@ Looking at the output under the Unix User SID (`S-1-22-1`), `enum4linux` reveale
 - `nancy` (RID `1002`)
 - `alice` (RID `1003`)
 
-![](https://cdn.hashnode.com/uploads/covers/6afe9176ea699cf3085ebd20/16a936e3-f1b3-461f-8506-438cb2e393ae.png align="center")
+![](https://cdn.hashnode.com/uploads/covers/6afe9176ea699cf3085ebd20/16a936e3-f1b3-461f-8506-438cb2e393ae.png)
 
 ---
 
@@ -143,7 +143,7 @@ Use code with caution.
 
 The folder contained `unix_passwords.txt`. I saved the four discovered usernames (`josh`, `bob`, `nancy`, and `alice`) into a custom file named `name.txt` inside the same directory so I could run an automated login attack.
 
-![](https://cdn.hashnode.com/uploads/covers/6afe9176ea699cf3085ebd20/3e2d7dbd-75d3-40ff-ba4c-5b3184c3bcb9.png align="center")
+![](https://cdn.hashnode.com/uploads/covers/6afe9176ea699cf3085ebd20/3e2d7dbd-75d3-40ff-ba4c-5b3184c3bcb9.png)
 
 **Step 3: Brute-Forcing SMB Credentials with Metasploit**
 
@@ -173,7 +173,7 @@ Options Explained:
 - `USER_FILE`: **Username Wordlist.** Points to our custom file containing the four enumerated usernames (`josh`, `bob`, `nancy`, `alice`).
 - `PASS_FILE`: **Password Wordlist.** Points to `unix_passwords.txt` so Metasploit tests each password against every username.\\
 
-![](https://cdn.hashnode.com/uploads/covers/6afe9176ea699cf3085ebd20/cfd4b902-d18a-4e96-8f14-f0bdadb780dc.png align="center")
+![](https://cdn.hashnode.com/uploads/covers/6afe9176ea699cf3085ebd20/cfd4b902-d18a-4e96-8f14-f0bdadb780dc.png)
 
 **Brute-Force Results**
 
@@ -185,9 +185,9 @@ After running the module, Metasploit tested combinations of the usernames and pa
 
 With valid credentials (`josh` / `purple`) in hand—and knowing from the hint that the user's private share shares the same name as their username the next step is to log into `//target.ine.local/josh` using `smbclient` and retrieve **Flag 2**.
 
-![](https://cdn.hashnode.com/uploads/covers/6afe9176ea699cf3085ebd20/d84a2c29-3830-408a-92df-34368b79673c.png align="center")
+![](https://cdn.hashnode.com/uploads/covers/6afe9176ea699cf3085ebd20/d84a2c29-3830-408a-92df-34368b79673c.png)
 
-![](https://cdn.hashnode.com/uploads/covers/6afe9176ea699cf3085ebd20/8d4e8e8c-0e60-4b2e-898a-20f3545ab9ff.png align="center")
+![](https://cdn.hashnode.com/uploads/covers/6afe9176ea699cf3085ebd20/8d4e8e8c-0e60-4b2e-898a-20f3545ab9ff.png)
 
 **Retrieving Flag 2 & Finding the Next Clue**
 
@@ -227,7 +227,7 @@ In addition to ports 22, 139, and 445, Nmap uncovered a hidden service running o
 
 - **Port 5554 (FTP):** `vsftpd 2.0.8 or later`
 
-![](https://cdn.hashnode.com/uploads/covers/6afe9176ea699cf3085ebd20/60e9cbe0-55da-41ac-9a07-efaf16119227.png align="center")
+![](https://cdn.hashnode.com/uploads/covers/6afe9176ea699cf3085ebd20/60e9cbe0-55da-41ac-9a07-efaf16119227.png)
 
 **Step 2: Banner Grabbing with Netcat (**`nc`**)**
 
@@ -253,7 +253,7 @@ As soon as Netcat connected, the server printed a revealing welcome banner:
 
 This banner handed us three target usernames with weak passwords: `ashley`, `alice`, and `amanda` (and we already knew `alice` was a valid local user on the machine from our earlier `enum4linux` scan!). After checking the banner, I typed `quit` to cleanly close the FTP session.
 
-![](https://cdn.hashnode.com/uploads/covers/6afe9176ea699cf3085ebd20/d62dd651-6a7e-4c21-a5d8-239333e20535.png align="center")
+![](https://cdn.hashnode.com/uploads/covers/6afe9176ea699cf3085ebd20/d62dd651-6a7e-4c21-a5d8-239333e20535.png)
 
 **Step 3: Brute-Forcing FTP Credentials with Hydra**
 
@@ -280,15 +280,15 @@ Hydra quickly found a valid login for `alice`:
 
 - **Valid FTP Credentials:** `alice : pretty`
 
-![](https://cdn.hashnode.com/uploads/covers/6afe9176ea699cf3085ebd20/679178d4-f903-48f9-aa36-e3c28b37d9b6.png align="center")
+![](https://cdn.hashnode.com/uploads/covers/6afe9176ea699cf3085ebd20/679178d4-f903-48f9-aa36-e3c28b37d9b6.png)
 
 **Step 4: Retrieving Flag 3**
 
 After logging into the FTP server (`ftp target.ine.local 5554`) as `alice` with the password `pretty` and downloading `flag3.txt`, I checked its contents locally:
 
-![](https://cdn.hashnode.com/uploads/covers/6afe9176ea699cf3085ebd20/e69b3c41-9df9-4863-b3ff-d5b038c0f4d0.png align="center")
+![](https://cdn.hashnode.com/uploads/covers/6afe9176ea699cf3085ebd20/e69b3c41-9df9-4863-b3ff-d5b038c0f4d0.png)
 
-![](https://cdn.hashnode.com/uploads/covers/6afe9176ea699cf3085ebd20/9e70f1aa-6c4c-43c7-95c7-dcd56fa4d728.png align="center")
+![](https://cdn.hashnode.com/uploads/covers/6afe9176ea699cf3085ebd20/9e70f1aa-6c4c-43c7-95c7-dcd56fa4d728.png)
 
 **Flag 4: SSH Pre-Authentication Banner Enumeration**
 
