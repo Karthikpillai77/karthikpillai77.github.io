@@ -58,10 +58,10 @@ export const profileConfig: ProfileConfig = {
 	bio: "Web Security Researcher",
 	links: [
 		{
-      name: "LinkedIn",
-      icon: "fa6-brands:linkedin",
-      url: "www.linkedin.com/in/karthik-pillai-b39931224",
-    }
+			name: "LinkedIn",
+			icon: "fa6-brands:linkedin",
+			url: "https://www.linkedin.com/in/karthik-pillai-b39931224",
+		},
 	],
 };
 
